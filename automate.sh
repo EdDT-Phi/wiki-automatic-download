@@ -8,7 +8,7 @@
 # Now edit the URL: remove everything after /w/ or /wiki/en/, and replace it with api.php
 # (In the example, the result would be: http://wikitravel.org/wiki/en/api.php). 
 
-# If it doesn't have API, or for more info, look at the github page
+# If it doesn't have API, or for more info, check out this github page:
 # https://github.com/WikiTeam/wikiteam
 
 if (($# < 1))
