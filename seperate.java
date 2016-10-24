@@ -1,21 +1,22 @@
 import java.util.*;
 import java.io.*;
-public class seperate{
-	public static void main(String[] args) {
+public class Seperate{
 
+	// Program to seperate several html pages in one file to unique files.
+
+	public static void main(String[] args) {
+		BufferedWriter bw = null;
 		try (BufferedReader reader = new BufferedReader(new FileReader("output.html"));){
-			
-			int count = 0;
+			int num_pages = 0;
 			boolean newPage = true;
 			String line = "";
 			String title = "";
-			BufferedWriter bw = new BufferedWriter(new FileWriter(new File("temp/Main Page.html")));
-			while((line = reader.readLine())!= null) { //&& i --> 0){
-				// expect <doc at start
+			bw = new BufferedWriter(new FileWriter(new File("temp/Main Page.html")));
+			while((line = reader.readLine())!= null) {
 				if(newPage){
+					// expect <doc at start
 					if (line.substring(0, 4).equals("<doc")) {
 						title = line.substring(line.indexOf("\" title=\"" ) + 9, line.indexOf("\">"));
-						//System.out.println(title);
 						newPage = false;
 						bw.close();
 						bw = new BufferedWriter(new FileWriter(new File("temp/" + title.replaceAll("\\/","") + ".html")));
@@ -27,15 +28,15 @@ public class seperate{
 
 				bw.write(line + "\n");
 
-				// end of doc
+				// end of page, start new page at next pass
 				if(line.equals("</doc>")){
-					// Output new file
 					newPage = true;
-					count++;
+					num_pages++;
 				}
 			}
 
-			System.out.println(count);
+			System.out.println(num_pages);
+			bw.close();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
